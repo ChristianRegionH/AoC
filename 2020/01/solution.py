@@ -11,13 +11,8 @@ if sys.argv[1] == "test":
 else:
     data = inputdata
 
-numbers = [int(x) for x in data]
 def solution(part):
-    positions = [0, 1, 2]
-    a = 0
-    b = 0
-    c = 0
-
+    numbers = [int(x) for x in data]
     for i_a, number_a in enumerate(numbers):
         for i_b, number_b in enumerate(numbers[i_a + 1:]):
             if part == 1:
