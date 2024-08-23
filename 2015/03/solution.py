@@ -13,22 +13,23 @@ else:
     data = inputdata
 
 def solution(part):
-    gamma = ""
-    epsilon = ""
+    pos = (0, 0)
+    houses = defaultdict(int)
 
-    for i in range(len(data[0])):
-        total = 0
-        for line in data:
-            if line[i] == "0":
-                total -= 1
-            else:
-                total += 1
-        gamma = gamma + ("1" if total > 0 else "0")
+    houses[pos] += 1
 
-    for x in gamma:
-        epsilon = epsilon + ("1" if x == "0" else "0")
+    for dir in data[0]:
+        if dir == "^":
+            pos = (pos[0], pos[1] + 1)
+        elif dir == "v":
+            pos = (pos[0], pos[1] - 1)
+        elif dir == ">":
+            pos = (pos[0] + 1, pos[1])
+        elif dir == "<":
+            pos = (pos[0] - 1, pos[1])
+        houses[pos] += 1
 
-    answer = int(gamma, 2) *  int(epsilon, 2)
+    answer = len(houses)
 
     return answer
     
