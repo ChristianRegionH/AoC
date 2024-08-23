@@ -12,16 +12,7 @@ else:
     data = inputdata
 
 def solution(part):
-    elves = []
-    current = 0
-    for line in data:
-        if line == "":
-            elves.append(current)
-            current = 0
-        else:
-            current += int(line)
-    elves.sort(reverse = True)
-    return sum(elves[0:1 if part == 1 else 3])
-    
+    return 1
+
 print("Part 1:", solution(1))
 print("Part 2:", solution(2))
