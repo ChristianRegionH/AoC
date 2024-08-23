@@ -1,5 +1,4 @@
 import sys
-from collections import defaultdict
 
 with open("test.txt") as f:
     testdata = f.read().splitlines()
