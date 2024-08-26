@@ -12,22 +12,25 @@ if sys.argv[1] == "test":
 else:
     data = inputdata
 
-data = [int(x) for x in data]
-
 def solution(part):
-    total = 0
-    
-    for i in range(len(data)):
-        
+    for line in data:
+        total = 0
         if part == 1:
-            if i >= 1:
-                if data[i] > data[i - 1]:
-                    total += 1            
-            
+            for i in range(len(line)):
+                if i == len(line) - 1:
+                    if line[i] == line[0]:
+                        total += int(line[i])
+                else:
+                    if line[i] == line[i + 1]:
+                        total += int(line[i]) 
         elif part == 2:
-            if i >= 3:
-                if sum(data[i-3:i]) > sum(data[i-4:i-1]):
-                    total += 1
+            for i in range(len(line)):
+                if i < len(line) / 2 - 1:
+                    if line[i] == line[i + int(len(line) / 2)]:
+                        total += int(line[i])
+                else:
+                    if line[i] == line[i - int(len(line) / 2)]:
+                        total += int(line[i])
 
     return total
     

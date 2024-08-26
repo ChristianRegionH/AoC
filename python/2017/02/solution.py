@@ -13,31 +13,22 @@ else:
     data = inputdata
 
 def solution(part):
-    pos = (0, 0, 0)
-
-    for line in data:
-        direction, x = line.split(" ")
-        x = int(x)
+    answer = 0
+    for row in data:
+        values = [int(x) for x in row.split()]
         if part == 1:
-            if direction == "forward":
-                pos = (pos[0] + x, pos[1], pos[2])
-            elif direction == "down":
-                pos = (pos[0], pos[1] + x, pos[2])
-            elif direction == "up":
-                pos = (pos[0], pos[1] - x, pos[2])
-
-        elif part == 2:
-            if direction == "down":
-                pos = (pos[0], pos[1], pos[2] + x)
-            elif direction == "up":
-                pos = (pos[0], pos[1], pos[2] - x)
-            elif direction == "forward":
-                pos = (pos[0] + x, pos[1] + (pos[2] * x), pos[2])
-
-    answer = pos[0] * pos[1]
+            difference = abs(min(values) - max(values))
+            answer += difference
+        if part == 2:
+            for number in values:
+                other_values = values.copy()
+                other_values.remove(number)
+                for other_number in other_values:
+                    divident = number / other_number
+                    if divident == int(divident):
+                        answer += int(divident)
     
     return answer
     
-
 print("Part 1:", solution(1))
 print("Part 2:", solution(2))
