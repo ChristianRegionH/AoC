@@ -31,17 +31,14 @@ def solution(part):
                 if action == "on":
                     lights[(x, y)] = 1 if part == 1 else lights[(x, y)] + 1
                 elif action == "off":
-                    lights[(x, y)] = 0 if part == 1 else lights[(x, y)] - 1
+                    lights[(x, y)] = 0 if part == 1 else max(lights[(x, y)] - 1, 0)
                 elif action == "toggle":
                     lights[(x, y)] = 1 - lights[(x, y)] if part == 1 else lights[(x, y)] + 2
     
-    for k, v in lights.items():
-        if v == 1:
-            answer += 1
+    for brightness in lights.values():
+        answer += brightness
 
     return answer
     
 print("Part 1:", solution(1))
 print("Part 2:", solution(2))
-
-# 378838 -- too low
