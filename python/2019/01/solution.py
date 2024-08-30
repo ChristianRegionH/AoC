@@ -12,23 +12,18 @@ if sys.argv[1] == "test":
 else:
     data = inputdata
 
-data = [int(x) for x in data]
-
 def solution(part):
     total = 0
-    
-    for i in range(len(data)):
-        
-        if part == 1:
-            if i >= 1:
-                if data[i] > data[i - 1]:
-                    total += 1            
-            
-        elif part == 2:
-            if i >= 3:
-                if sum(data[i-3:i]) > sum(data[i-4:i-1]):
-                    total += 1
 
+    if part == 1:
+        for number in data:
+            total += int(number)//3 - 2
+    elif part == 2:
+        for number in data:
+            fuel = int(number)
+            while fuel > 0:
+                fuel = max(int(fuel)//3 - 2, 0)
+                total += fuel
     return total
     
 print("Part 1:", solution(1))
