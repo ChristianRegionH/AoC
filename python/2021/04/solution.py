@@ -13,8 +13,7 @@ else:
     data = inputdata
 
 def solution(part):
-    total = 0
-    return total
+    return 1
     
 print("Part 1:", solution(1))
 print("Part 2:", solution(2))

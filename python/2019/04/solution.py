@@ -12,42 +12,31 @@ if sys.argv[1] == "test":
 else:
     data = inputdata
 
-def solution(part):
-    total = 0
+
+def test_password(input, part):
+    req1 = True if len(input) == 6 else False
+    req2 = any([input[i] == input[i + 1] for i in range(len(input) - 1)])
+    req3 = True if set([input[i] <= input[i + 1] for i in range(len(input) - 1)]) == {True} else False
+    faux = 'm' + input + 'm'
+    req4 = any([faux[i] == faux[i + 1] and faux[i] != faux[i - 1] and faux[i] != faux[i + 2] for i in range(len(input))])
 
     if part == 1:
-        for line in data:
-            compartment1, compartment2 = line[0:int(len(line)/2)], line[int(len(line)/2):]
-            for letter in compartment1:
-                if letter in compartment2:
-                    score = ord(letter) - 96 if ord(letter) >= 97 else ord(letter) - 38
-                    total += score
-                    break
-    
+        answer = 1 if req1 and req2 and req3 else 0
     elif part == 2:
-        groups = []
-        group = []
-        for i, rucksack in enumerate(data):
-            group.append(rucksack)
-            if (i + 1) % 3 == 0:
-                groups.append(group)
-                group = []
-        for group in groups:
-            dict = defaultdict(list)
-            for rucksack in group:
-                for letter in rucksack:
-                    if rucksack in dict[letter]:
-                        pass
-                    else:
-                        dict[letter].append(rucksack)
-            for k, v in dict.items():
-                if len(v) == 3:
+        answer = 1 if req1 and req2 and req3 and req4 else 0
 
-                    score = ord(k) - 96 if ord(k) >= 97 else ord(k) - 38
-                    total += score
+    return answer
+
+def solution(part):
+    total = 0
+    start, end = [int(x) for x in data[0].split("-")]
+
+    for i in range(start, end + 1):
+        total += test_password(str(i), part)
 
     return total
-    
+
+# 228 - too low
 
 print("Part 1:", solution(1))
 print("Part 2:", solution(2))
