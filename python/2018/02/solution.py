@@ -13,31 +13,31 @@ else:
     data = inputdata
 
 def solution(part):
-    pos = (0, 0, 0)
-
-    for line in data:
-        direction, x = line.split(" ")
-        x = int(x)
-        if part == 1:
-            if direction == "forward":
-                pos = (pos[0] + x, pos[1], pos[2])
-            elif direction == "down":
-                pos = (pos[0], pos[1] + x, pos[2])
-            elif direction == "up":
-                pos = (pos[0], pos[1] - x, pos[2])
-
-        elif part == 2:
-            if direction == "down":
-                pos = (pos[0], pos[1], pos[2] + x)
-            elif direction == "up":
-                pos = (pos[0], pos[1], pos[2] - x)
-            elif direction == "forward":
-                pos = (pos[0] + x, pos[1] + (pos[2] * x), pos[2])
-
-    answer = pos[0] * pos[1]
+    if part == 1:
+        twos = 0
+        threes = 0
+        for box in data:
+            letters = defaultdict(int)
+            for letter in box:
+                letters[letter] += 1
+            twos += 1 if any([k for k, v in letters.items() if v == 2]) else 0
+            threes += 1 if any([k for k, v in letters.items() if v == 3]) else 0
+        checksum = twos * threes
+        return checksum
     
-    return answer
-    
-
+    elif part == 2:
+        hit_length = len(data[0]) - 1
+        pairs = []
+        for i in range(len(data)):
+            for j in range(i + 1, len(data)):
+                pairs.append((data[i], data[j]))
+        for pair in pairs:
+            answer = ""
+            for i in range(len(pair[0])):
+                if pair[0][i] == pair[1][i]:
+                    answer = answer + pair[0][i]
+            if len(answer) == hit_length:
+                return answer
+            
 print("Part 1:", solution(1))
 print("Part 2:", solution(2))

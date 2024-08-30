@@ -15,21 +15,21 @@ else:
 data = [int(x) for x in data]
 
 def solution(part):
-    total = 0
-    
-    for i in range(len(data)):
-        
-        if part == 1:
-            if i >= 1:
-                if data[i] > data[i - 1]:
-                    total += 1            
-            
-        elif part == 2:
-            if i >= 3:
-                if sum(data[i-3:i]) > sum(data[i-4:i-1]):
-                    total += 1
 
-    return total
+    total = 0
+    visited = set()
+    visited.add(total)
+    
+    while True:
+        for number in data:
+            total += number
+            if part == 2:
+                if total in visited:
+                    return total
+            visited.add(total)
+            
+        if part == 1:
+            return total
     
 print("Part 1:", solution(1))
 print("Part 2:", solution(2))
