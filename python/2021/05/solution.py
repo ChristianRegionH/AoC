@@ -17,26 +17,24 @@ def solution(part):
 
     for line in data:
         c1, c2 = line.split(" -> ")
-        x1, y1 = c1.split(",")
-        x2, y2 = c2.split(",")
-        x1 = int(x1)
-        y1 = int(y1)
-        x2 = int(x2)
-        y2 = int(y2)
+        c1 = (int(c1.split(",")[0]), int(c1.split(",")[1]))
+        c2 = (int(c2.split(",")[0]), int(c2.split(",")[1]))
 
-        if x1 == x2 or y1 == y2:
-            for x in range(min(x1, x2), max(x1, x2) + 1):
-                for y in range(min(y1, y2), max(y1, y2) + 1):
-                    grid[(x, y)] = grid[(x, y)] + 1
-        else:
-            if part == 2:
-                
-            
+        line_len = max(abs(c1[0] - c2[0]), abs(c1[1] - c2[1])) + 1
+
+        for i in range(line_len):
+            x_movement = (1 if c2[0] > c1[0] else -1) * (1 if c2[0] != c1[0] else 0)
+            y_movement = (1 if c2[1] > c1[1] else -1) * (1 if c2[1] != c1[1] else 0)
+            coords = (c1[0] + x_movement * i, c1[1] + y_movement * i)
+            if c1[0] == c2[0] or c1[1] == c2[1]:
+                grid[coords] = grid[coords] + 1
+            else:
+                if part == 2:
+                    grid[coords] = grid[coords] + 1
 
     answer = len([k for k, v in grid.items() if v > 1])
 
     return answer
-
     
 print("Part 1:", solution(1))
 print("Part 2:", solution(2))
