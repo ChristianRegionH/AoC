@@ -16,9 +16,6 @@ def report_checker(report):
     increasing = 0
     decreasing = 0
     for i in range(1, len(report)):
-        if increasing > 0 and decreasing > 0:
-            safe = 0
-            break
         if report[i] == report[i - 1]:
             safe = 0
             break
@@ -29,6 +26,9 @@ def report_checker(report):
             increasing += 1
         if report[i] < report[i - 1]:
             decreasing += 1
+        if increasing > 0 and decreasing > 0:
+            safe = 0
+            break
     return safe
 
 def solution(part):
@@ -36,6 +36,9 @@ def solution(part):
     for line in data:
         report = [int(x) for x in line.split()]
         if part == 1:
+            print(report)
+            print(report_checker(report))
+            print()
             count += report_checker(report)
         elif part == 2:
             subreports = []
