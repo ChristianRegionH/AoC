@@ -28,9 +28,9 @@ def solution(part):
                 answer += n1 * n2
             else:
                 answer += n1 * n2 * do
-        elif i.startswith("don"):
+        elif i == "don't()":
             do = False
-        else:
+        elif i == "do()":
             do = True
 
     return answer
