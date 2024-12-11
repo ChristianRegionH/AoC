@@ -1,4 +1,5 @@
 import sys
+from collections import defaultdict
 
 with open("test.txt") as f:
     testdata = f.read().splitlines()
@@ -11,33 +12,27 @@ if sys.argv[1] == "test":
 else:
     data = inputdata
 
-grid = dict()
-for r, line in enumerate(data):
-    for c, value in enumerate(line):
-        grid[(r, c)] = int(value)
+stones = defaultdict(int)
+for stone in data[0].split():
+    stones[int(stone)] = 1
 
-ans1 = 0
-ans2 = 0
-
-trails = []
-trailcoords = set()
-for k, v in grid.items():
-    if v == 0:
-        trails.append([k])
-
-while trails:
-    trail = trails.pop()
-    next_step = len(trail)
-    if next_step == 10:
-        ans2 += 1
-        if (trail[0], trail[9]) not in trailcoords:
-            ans1 += 1
-            trailcoords.add((trail[0], trail[9]))
-        continue
-    for dir in [(1, 0), (-1, 0), (0, 1), (0, -1)]:       
-        pos = (trail[0][0] + dir[0], trail[0][1] + dir[1])
-        if pos in grid and grid[pos] == next_step:
-            trails.append([pos] + trail)
-
-print(ans1)
-print(ans2)
+blinks = 0
+while True:
+    if blinks in [25, 75]:
+        print("After", blinks, "blinks:", sum([v for v in stones.values()]))
+    if blinks == 75:
+        break
+    after_blink = defaultdict(int)
+    for k, v in stones.items():
+        kstr = str(k)
+        len_kstr = len(kstr)
+        if k == 0:
+            after_blink[1] += v
+        elif len_kstr % 2 == 0:
+            after_blink[int(kstr[:len_kstr//2])] += v
+            after_blink[int(kstr[len_kstr//2:])] += v
+        else:
+            after_blink[k * 2024] += v
+    stones = after_blink
+    blinks += 1
+    
