@@ -35,4 +35,3 @@ while True:
             after_blink[k * 2024] += v
     stones = after_blink
     blinks += 1
-    
